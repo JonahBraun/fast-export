@@ -134,7 +134,11 @@ def sanitize_name(name,what="branch"):
   """Sanitize input roughly according to git-check-ref-format(1)"""
 
   def dot(name):
-    if name[0] == '.': return '_'+name[1:]
+    # I'm not sure why the name is empty on some branches, the root cause should be examined.  Until then this hack works.
+    if len(name) == 0:
+      return '_emptyOnImport'
+    if name[0] == '.':
+      return '_'+name[1:]
     return name
 
   n=name
